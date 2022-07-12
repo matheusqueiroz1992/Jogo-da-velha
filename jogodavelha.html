@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>JOGO DA VELHA</h1>
+
+    <p id="jogador"></p>
+
+    <div class="content">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+
+    <p id="texto"></p>
+
+    <div class="botao">
+      <button id="reset">Reset</button>
+    </div>
+
+    <style>
+      h1 {
+        font-size: 50px;
+        text-align: center;
+      }
+
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+        width: 306px;
+        text-align: center;
+        margin: auto;
+      }
+
+      .box {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        font-size: 50px;
+      }
+
+      #texto {
+        text-align: center;
+        font-size: 40px;
+        color: red;
+        margin: auto;
+        position: absolute;
+        top: 39%;
+        width: 100%;
+        background: #000000b0;
+      }
+
+      #jogador {
+        text-align: center;
+        font-size: 15px;
+        color: red;
+      }
+
+      .botao {
+        text-align: center;
+        padding-top: 30px;
+        background-color: white;
+      }
+    </style>
+
+    <script>
+      let resultado = ['', '', '', '', '', '', '', '', '']
+      let boxes = document.getElementsByClassName('box')
+      let jogadorAtual = 'X'
+      let contador = 0
+      let texto = document.getElementById('texto')
+      let jogador = document.getElementById('jogador')
+
+      //Botão de reset
+      reset.addEventListener('click', function () {
+        for (let i = 0; i < boxes.length; i++) {
+          boxes[i].innerHTML = ''
+          contador = 0
+          jogadorAtual = 'X'
+          resultado = []
+          if (
+            texto.innerHTML === 'Jogador X Ganhou' ||
+            texto.innerHTML === 'Jogador O Ganhou' ||
+            texto.innerHTML === 'Empatou'
+          ) {
+            texto.innerHTML = ''
+          }
+        }
+      })
+
+      function changePlayer() {
+        if (jogadorAtual === 'X') {
+          jogadorAtual = 'O'
+        } else {
+          jogadorAtual = 'X'
+        }
+      }
+
+      for (let i = 0; i < boxes.length; i++) {
+        let box = boxes[i]
+
+        box.addEventListener('click', function () {
+          if (box.innerHTML === '') {
+            if (texto.innerHTML === '') {   //bloqueio do click
+              box.innerHTML = jogadorAtual
+              resultado[i] = jogadorAtual
+              let alguemGanhou = vitoria()
+            if (!alguemGanhou) {
+              empate()
+            }
+            changePlayer()}
+            contador++
+          }
+        })
+
+        //Condição de Empate
+
+        function empate() {
+          if (contador === 8) {
+            texto.innerHTML = 'Empatou'
+          }
+        }
+
+        function exibeVencedor() {
+          texto.innerHTML = 'Jogador ' + jogadorAtual + ' Ganhou'
+        }
+
+        //Condições de vitoria Jogador X
+
+        function vitoria() {
+          if (
+            resultado[0] === jogadorAtual &&
+            resultado[1] === jogadorAtual &&
+            resultado[2] === jogadorAtual
+          ) {
+            exibeVencedor()
+            return true
+          }
+          if (
+            resultado[3] === jogadorAtual &&
+            resultado[4] === jogadorAtual &&
+            resultado[5] === jogadorAtual
+          ) {
+            exibeVencedor()
+            return true
+          }
+          if (
+            resultado[6] === jogadorAtual &&
+            resultado[7] === jogadorAtual &&
+            resultado[8] === jogadorAtual
+          ) {
+            exibeVencedor()
+            return true
+          }
+          if (
+            resultado[0] === jogadorAtual &&
+            resultado[3] === jogadorAtual &&
+            resultado[6] === jogadorAtual
+          ) {
+            exibeVencedor()
+            return true
+          }
+          if (
+            resultado[1] === jogadorAtual &&
+            resultado[4] === jogadorAtual &&
+            resultado[7] === jogadorAtual
+          ) {
+            exibeVencedor()
+            return true
+          }
+          if (
+            resultado[2] === jogadorAtual &&
+            resultado[5] === jogadorAtual &&
+            resultado[8] === jogadorAtual
+          ) {
+            exibeVencedor()
+            return true
+          }
+          if (
+            resultado[0] === jogadorAtual &&
+            resultado[4] === jogadorAtual &&
+            resultado[8] === jogadorAtual
+          ) {
+            exibeVencedor()
+            return true
+          }
+          if (
+            resultado[2] === jogadorAtual &&
+            resultado[4] === jogadorAtual &&
+            resultado[6] === jogadorAtual
+          ) {
+            exibeVencedor()
+            return true
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
